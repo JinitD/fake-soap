@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:mio="http://demo8229239.mockable.io/service/1"
+                  targetNamespace="http://demo8229239.mockable.io/service/1">
+
+    <wsdl:documentation>
+        mockable.io generated WSDL
+    </wsdl:documentation>
+
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    targetNamespace="http://demo8229239.mockable.io/service/1">
+            
+            <xsd:element name="postUserRequest" type="xsd:anyType"/>
+            <xsd:element name="postUserResponse" type="xsd:anyType"/>
+            
+        </xsd:schema>
+    </wsdl:types>
+
+    
+    <wsdl:message name="postUserInputMessage">
+        <wsdl:part name="postUserInputPart" element="mio:postUserRequest"/>
+    </wsdl:message>
+    <wsdl:message name="postUserOutputMessage">
+        <wsdl:part name="postUserOutputPart" element="mio:postUserResponse"/>
+    </wsdl:message>
+    
+
+    <wsdl:portType name="fakeSoapPortType">
+        
+        <wsdl:operation name="postUser">
+            <wsdl:input name="postUserInput"
+                        message="mio:postUserInputMessage"/>
+            <wsdl:output name="postUserOutput"
+                         message="mio:postUserOutputMessage"/>
+        </wsdl:operation>
+        
+    </wsdl:portType>
+
+    <wsdl:binding name="fakeSoapBinding" type="mio:fakeSoapPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <wsdl:operation name="postUser">
+            <soap:operation
+                    soapAction="postUser"/>
+            <wsdl:input name="postUserInput">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="postUserOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+
+    <wsdl:service name="fakeSoapService">
+        <wsdl:port name="fakeSoapPort" binding="mio:fakeSoapBinding">
+            <soap:address
+                    location="http://demo8229239.mockable.io/fakeSoap"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
