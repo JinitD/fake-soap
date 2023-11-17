@@ -1,34 +1,35 @@
+const xml2js = require('xml2js');
+
 class SoapRequestBuilder {
+
   constructor(namespace, prefijo, soap) {
     this.namespace = namespace;//http://demo8229239.mockable.io/service/1
-    this.prefijo = prefijo;//mio
+    this.prefijo = prefijo;//sasf
     this.soap = soap; //http://schemas.xmlsoap.org/soap/envelope/
   }
 
-  buildEnvelope(bodyContent) { // empaquetado del xml con interpolación con variables
-    return `<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:soap="${this.soap}" xmlns:${this.prefijo}="${this.namespace}">
-        <soap: Header />
-            <soap:Body>
-                ${bodyContent}
-            </soap:Body>
-        </soap:Envelope>`;
-  }
-
-
-  buildRequest(body) {//cuerpo del xml
-
-    let request = `<${this.prefijo}:postUser>\n`;
-
-    for (const key in body) {
-      request += `\t\t\t\t\t<${key}>${body[key]}</${key}>\n`;
+  buildXml(user) {
+    const soapEnvelope = {
+      'soapenv:Envelope': {
+        '$': {
+          'xmlns:soap': `${this.soap}`,
+          'soapenv:encodingStyle': 'http://www.w3.org/2001/12/soap-encoding'
+        }, 
+        'soapenv:Header': {},
+        'soapenv:Body': {
+          '$': {
+            'xmlns:sasf': `${this.namespace}`
+          },
+          user
+        }
+      }
     }
-
-    request += `\t\t\t\t</${this.prefijo}:postUser>`; //${func} por si se necesita que cambie la funcion
-    
-    return request;
+    const builder = new xml2js.Builder({ //investigar como construir mas cositas aqui <-  
+      headless: true,
+      renderOpts: { pretty: true }
+    });
+    return builder.buildObject(soapEnvelope);
   }
-
 
 }
 

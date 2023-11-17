@@ -15,6 +15,9 @@
             <xsd:element name="postUserRequest" type="xsd:anyType"/>
             <xsd:element name="postUserResponse" type="xsd:anyType"/>
             
+            <xsd:element name="getUsersRequest" type="xsd:anyType"/>
+            <xsd:element name="getUsersResponse" type="xsd:anyType"/>
+            
         </xsd:schema>
     </wsdl:types>
 
@@ -26,6 +29,13 @@
         <wsdl:part name="postUserOutputPart" element="mio:postUserResponse"/>
     </wsdl:message>
     
+    <wsdl:message name="getUsersInputMessage">
+        <wsdl:part name="getUsersInputPart" element="mio:getUsersRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getUsersOutputMessage">
+        <wsdl:part name="getUsersOutputPart" element="mio:getUsersResponse"/>
+    </wsdl:message>
+    
 
     <wsdl:portType name="fakeSoapPortType">
         
@@ -34,6 +44,13 @@
                         message="mio:postUserInputMessage"/>
             <wsdl:output name="postUserOutput"
                          message="mio:postUserOutputMessage"/>
+        </wsdl:operation>
+        
+        <wsdl:operation name="getUsers">
+            <wsdl:input name="getUsersInput"
+                        message="mio:getUsersInputMessage"/>
+            <wsdl:output name="getUsersOutput"
+                         message="mio:getUsersOutputMessage"/>
         </wsdl:operation>
         
     </wsdl:portType>
@@ -48,6 +65,17 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="postUserOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        
+        <wsdl:operation name="getUsers">
+            <soap:operation
+                    soapAction="getUsers"/>
+            <wsdl:input name="getUsersInput">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getUsersOutput">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>

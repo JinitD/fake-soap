@@ -2,16 +2,22 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const lambda = require('../lambda/index')
-const port = 3000;
+const port = 8000;
 
 
 app.use(express.json());
 
 // Ruta de ejemplo
-app.post('/soap', async (req, res) => {
-  console.log(req.body)
-  const message = await lambda.getRequest(req.body);
-  res.json(message);
+app.post('/addUser', async (req, res) => {
+  const respose = await lambda.getRequest(req.body, "postUser");
+  res.status(respose.status)
+  res.json(respose.data);
+});
+
+app.get('/listUser', async (req, res) => {
+  const respose = await lambda.getRequest(req.body, "getUsers");
+  res.status(respose.status)
+  res.json(respose.data);
 });
 
 //pulbic
