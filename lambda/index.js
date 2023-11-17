@@ -3,7 +3,7 @@ const xmlResponseTransform = require('../layout/xmlResponseTransform')
 
 async function getRequest(jsonBody, soapAction) {
     let xmlParser = '';
-    if (Object.keys(jsonBody).length !== 0 && body.constructor === Object) {
+    if (Object.keys(jsonBody).length !== 0 && jsonBody.constructor === Object) {
         xmlParser = creteByPlantilla(jsonBody);
     }
     return sendRequest(xmlParser, soapAction);
