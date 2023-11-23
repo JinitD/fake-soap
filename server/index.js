@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-import { getRequest } from '../lambda/index';
+const lambda = require('../lambda/index')
 const port = 8000;
 
 
@@ -9,13 +9,13 @@ app.use(express.json());
 
 // Ruta de ejemplo
 app.post('/addUser', async (req, res) => {
-  const respose = await getRequest.getRequest(req.body, "postUser");
+  const respose = await lambda.getRequest(req.body, "postUser");
   res.status(respose.status)
   res.json(respose.data);
 });
 
 app.get('/listUser', async (req, res) => {
-  const respose = await getRequest.getRequest(req.body, "getUsers");
+  const respose = await lambda.getRequest(req.body, "getUsers");
   res.status(respose.status)
   res.json(respose.data);
 });
